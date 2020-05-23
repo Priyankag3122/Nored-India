@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import * as ROUTES from "../utils/routes";
 
-export default class signIn extends Component {
+class signIn extends Component {
     
     onHandlerSubmit = (event) => {
-        this.props.history.push(ROUTES.SIGNUP);
+        this.props.history.push(ROUTES.HOME);
     }
     
     render() {
@@ -19,8 +19,11 @@ export default class signIn extends Component {
                     <form>
                         <input type="text" id="login" className="fadeIn second" name="login" placeholder="Login" />
                         <input type="text" id="password" className="fadeIn third" name="login" placeholder="Enter password" />
-                        <input type="submit" className="fadeIn fourth" value="Log In" />
+                        <input type="submit" className="fadeIn fourth" value="Log In" onClick = {this.onHandlerSubmit.bind(this)} />
                     </form>
+                   
+                   
+                    
                     <p>
                         Don't have an account?{" "}
                         <Link to={"/signup"}>
@@ -35,3 +38,5 @@ export default class signIn extends Component {
         )
     }
 }
+
+export default withRouter(signIn);

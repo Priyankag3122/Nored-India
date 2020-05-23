@@ -6,11 +6,12 @@ import App from "./components/App";
 import SignIn from "./views/signIn";
 import SignUp from "./views/signUp";
 import LandingPage from "./views/landingPage";
+// import Home from "./views/home"
 
 // import Footer from "../components/common/footer";
 // import headerfile from "../components/headerfile";
 
-const Routes = ({history}) => (
+const Routes = () => (
   <BrowserRouter basename={"/"}>
    
       <Switch>
@@ -18,6 +19,7 @@ const Routes = ({history}) => (
           <Route exact path="/" component={LandingPage} />
           <Route path="/signup" component={SignUp} />
           <Route path="/signin" component={SignIn} />
+
           <Route path="/app" component={App} />
         </div>
       </Switch>

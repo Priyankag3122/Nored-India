@@ -89,7 +89,7 @@ class SignUpPage extends Component {
                       <span className="input-group-text"> <i className="fa fa-user"></i> </span>
                     </div>
                     <input
-                      classNameName={`form-control ${
+                      className={`form-control ${
                         errors && errors.fullName ? "is-invalid" : ""
                         }`}
                       name="fullName"
@@ -148,7 +148,7 @@ class SignUpPage extends Component {
                         errors && errors.confirmPassword ? "is-invalid" : ""
                         }`}
                       name="confirmPassword"
-                      class="form-control"
+                      className="form-control"
                       placeholder="Confirm password"
                       value={confirmPassword}
                       onChange={this.onChange}
