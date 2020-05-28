@@ -46,7 +46,7 @@ export default class about extends Component {
                   <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus aut mollitia eum ipsum fugiat odio officiis odit.</p>
                 </div>
                 <div className="card-footer">
-                  <a href="#">name@example.com</a>
+                  <a href="/#">name@example.com</a>
                 </div>
               </div>
             </div>
@@ -59,7 +59,7 @@ export default class about extends Component {
                   <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus aut mollitia eum ipsum fugiat odio officiis odit.</p>
                 </div>
                 <div className="card-footer">
-                  <a href="#">name@example.com</a>
+                  <a href="/#">name@example.com</a>
                 </div>
               </div>
             </div>
@@ -72,7 +72,7 @@ export default class about extends Component {
                   <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus aut mollitia eum ipsum fugiat odio officiis odit.</p>
                 </div>
                 <div className="card-footer">
-                  <a href="#">name@example.com</a>
+                  <a href="/#">name@example.com</a>
                 </div>
               </div>
             </div>

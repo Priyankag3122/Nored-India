@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { Link, withRouter } from "react-router-dom";
 import * as ROUTES from "../utils/routes";
 import PostDetail from "../views/postDetail"
+import { withAuthorization } from '../components/Session';
 
-export default class home extends Component {
+class home extends Component {
     onHandlerSubmit = (event) => {
         this.props.history.push(ROUTES.POSTDETAIL);
     }
@@ -23,52 +24,52 @@ export default class home extends Component {
 
                             {/* <!-- Blog Post --> */}
                             <div className="card mb-4">
-                                <img className="card-img-top" src="http://placehold.it/750x300" alt="Card image cap" />
+                                <img className="card-img-top" src="http://placehold.it/750x300" alt="Card cap" />
                                 <div className="card-body">
                                     <h2 className="card-title">Post Title</h2>
                                     <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
-                                    <a href="#" className="btn btn-primary" onClick={this.onHandlerSubmit.bind(this)}>
+                                    <a href="/#" className="btn btn-primary" onClick={this.onHandlerSubmit.bind(this)}>
 
                                         Read More &rarr;</a>
                                 </div>
                                 <div className="card-footer text-muted">
-                                    Posted on January 1, 2017 by   <a href="#">Start Bootstrap</a>
+                                    Posted on January 1, 2017 by   <a href="/#">Start Bootstrap</a>
                                 </div>
                             </div>
 
                             {/* <!-- Blog Post --> */}
                             <div className="card mb-4">
-                                <img className="card-img-top" src="http://placehold.it/750x300" alt="Card image cap" />
+                                <img className="card-img-top" src="http://placehold.it/750x300" alt="Card cap" />
                                 <div className="card-body">
                                     <h2 className="card-title">Post Title</h2>
                                     <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
-                                    <a href="#" className="btn btn-primary">Read More &rarr;</a>
+                                    <a href="/#" className="btn btn-primary">Read More &rarr;</a>
                                 </div>
                                 <div className="card-footer text-muted">
-                                    Posted on January 1, 2017 by   <a href="#">Start Bootstrap</a>
+                                    Posted on January 1, 2017 by   <a href="/#">Start Bootstrap</a>
                                 </div>
                             </div>
 
                             {/* <!-- Blog Post --> */}
                             <div className="card mb-4">
-                                <img className="card-img-top" src="http://placehold.it/750x300" alt="Card image cap" />
+                                <img className="card-img-top" src="http://placehold.it/750x300" alt="Card cap" />
                                 <div className="card-body">
                                     <h2 className="card-title">Post Title</h2>
                                     <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
-                                    <a href="#" className="btn btn-primary">Read More &rarr;</a>
+                                    <a href="/#" className="btn btn-primary">Read More &rarr;</a>
                                 </div>
                                 <div className="card-footer text-muted">
-                                    Posted on January 1, 2017 by        <a href="#">Start Bootstrap</a>
+                                    Posted on January 1, 2017 by        <a href="/#">Start Bootstrap</a>
                                 </div>
                             </div>
 
                             {/* <!-- Pagination --> */}
                             <ul className="pagination justify-content-center mb-4">
                                 <li className="page-item">
-                                    <a className="page-link" href="#">&larr; Older</a>
+                                    <a className="page-link" href="/#">&larr; Older</a>
                                 </li>
                                 <li className="page-item disabled">
-                                    <a className="page-link" href="#">Newer &rarr;</a>
+                                    <a className="page-link" href="/#">Newer &rarr;</a>
                                 </li>
                             </ul>
 
@@ -87,26 +88,26 @@ export default class home extends Component {
                                         <div className="col-lg-6">
                                             <ul className="list-unstyled mb-0">
                                                 <li>
-                                                    <a href="#">Web Design</a>
+                                                    <a href="/#">Web Design</a>
                                                 </li>
                                                 <li>
-                                                    <a href="#">HTML</a>
+                                                    <a href="/#">HTML</a>
                                                 </li>
                                                 <li>
-                                                    <a href="#">Freebies</a>
+                                                    <a href="/#">Freebies</a>
                                                 </li>
                                             </ul>
                                         </div>
                                         <div className="col-lg-6">
                                             <ul className="list-unstyled mb-0">
                                                 <li>
-                                                    <a href="#">JavaScript</a>
+                                                    <a href="/#">JavaScript</a>
                                                 </li>
                                                 <li>
-                                                    <a href="#">CSS</a>
+                                                    <a href="/#">CSS</a>
                                                 </li>
                                                 <li>
-                                                    <a href="#">Tutorials</a>
+                                                    <a href="/#">Tutorials</a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -140,3 +141,5 @@ export default class home extends Component {
         )
     }
 }
+const condition = authUser => !!authUser;
+export default withAuthorization(condition)(home);

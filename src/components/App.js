@@ -1,12 +1,16 @@
-import React from "react";
+import React, { Component } from 'react';
 import { Route, Switch } from "react-router-dom";
 import * as ROUTES from "../utils/routes";
 import Home from "../views/home"
 import PostDetail from "../views/postDetail"
 import HeaderApp from "../common/headerApp"
 import About from "../views/about"
+import { AuthUserContext } from './Session';
+import { withAuthentication } from './Session';
 
-const App = ({ match, history }) => {
+
+
+const App = ({ match, history, authUser }) => {
   return (
     <div>
       <HeaderApp />
@@ -26,6 +30,7 @@ const App = ({ match, history }) => {
 
       </Switch>
     </div>
+  
   );
 };
-export default App;
+export default withAuthentication(App);
