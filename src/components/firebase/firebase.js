@@ -1,20 +1,22 @@
 import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
+import 'firebase/storage'
 
 const config = {
-  apiKey: "AIzaSyC0NnminWzFo2Lj8g0crYBMjUyzsuHFPAY",
-  authDomain: "nored-india-344d2.firebaseapp.com",
-  databaseURL: "https://nored-india-344d2.firebaseio.com",
-  projectId: "nored-india-344d2",
-  storageBucket: "nored-india-344d2.appspot.com",
-  messagingSenderId: "804963923765",
-  appId: "1:804963923765:web:638a6e3e598805d4983e7c",
-  measurementId: "G-X4L7Y8RM4F"
+  apiKey: "AIzaSyCPrNYZMpF6i06lJjXpki-qyD2vostQGN4",
+  authDomain: "noredindia.firebaseapp.com",
+  databaseURL: "https://noredindia.firebaseio.com",
+  projectId: "noredindia",
+  storageBucket: "noredindia.appspot.com",
+  messagingSenderId: "575845268748",
+  appId: "1:575845268748:web:2c5f4d0b1e25a701f25d29",
+  measurementId: "G-1PXJH9W6QT"
   };
 
   class Firebase {
     constructor() {
+      
       app.initializeApp(config);
 
        /* Helper */
@@ -26,6 +28,7 @@ const config = {
 
     this.auth = app.auth();
     this.db = app.firestore();
+    this.storage = app.storage();
 
     /* Social Sign In Method Provider */
 
@@ -49,13 +52,21 @@ const config = {
 
   doSignInWithTwitter = () =>
     this.auth.signInWithPopup(this.twitterProvider);
+    
   doSignOut = () => this.auth.signOut();
 
+  doSendEmailVerification = () =>
+    this.auth.currentUser.sendEmailVerification({
+      url: 'http://localhost:3000',
+    });
   doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
  
   doPasswordUpdate = password =>
     this.auth.currentUser.updatePassword(password);
-
+  
+  doUpdateProfile = displayName =>
+    this.auth.currentUser.updateProfile(displayName);
+  
    // *** Merge Auth and DB User API *** //
    componentDidMount(){
        this.onAuthUserListener();
@@ -78,6 +89,7 @@ const config = {
            authUser = {
              uid: authUser.uid,
              email: authUser.email,
+             username: authUser.username,
              emailVerified: authUser.emailVerified,
              providerData: authUser.providerData,
              ...dbUser,
@@ -102,6 +114,10 @@ const config = {
   message = uid => this.db.doc(`messages/${uid}`);
 
   messages = () => this.db.collection('messages');
+
+  image = uid => this.storage.ref(`images/${uid}`);
+
+  images = () => this.storage.ref('images');
 
 }
    

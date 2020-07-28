@@ -1,28 +1,80 @@
-import React from 'react';
-import { Switch, Route } from 'react-router-dom';
-import { compose } from 'recompose';
-
-import { withAuthorization, withEmailVerification } from '../../components/Session';
-import { UserList, UserItem } from '../Users';
-import * as ROLES from '../../utils/routes';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { withFirebase } from '../../components/firebase';
 import * as ROUTES from '../../utils/routes';
+import Messages from "../../components/Messages";
+ 
+class Admin extends Component {
+  constructor(props) {
+    super(props);
+ 
+    this.state = {
+      loading: false,
+      users: [],
+    };
+  }
+  
+ 
+  componentDidMount() {
+    this.setState({ loading: true });
 
-const AdminPage = () => (
-  <div>
-    <h1>Admin</h1>
-    <p>The Admin Page is accessible by every signed in admin user.</p>
+    this.unsubscribe = this.props.firebase
+      .users()
+      .onSnapshot(snapshot => {
+        let users = [];
 
-    <Switch>
-      <Route exact path={ROUTES.ADMIN_DETAILS} component={UserItem} />
-      <Route exact path={ROUTES.ADMIN} component={UserList} />
-    </Switch>
-  </div>
+        snapshot.forEach(doc =>
+          users.push({ ...doc.data(), uid: doc.id }),
+        );
+
+        this.setState({
+          users,
+          loading: false,
+        });
+      });
+  }
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+ 
+  render() {
+    const { users, loading } = this.state;
+    return (
+      <div>
+        <Messages/>
+        <h1>Admin</h1>
+        {loading && <div>Loading ...</div>}
+ 
+        <UserList users={users} />
+      </div>
+    );
+  }
+}
+const UserList = ({ users }) => (
+  <ul>
+    {users.map(user => (
+      <li key={user.uid}>
+        <span>
+          <strong>ID:</strong> {user.uid}
+        </span>
+        <span>
+          <strong>E-Mail:</strong> {user.email}
+        </span>
+        <span>
+          <strong>Username:</strong> {user.username}
+        </span>
+        <span>
+                <Link
+                  to={{
+                    pathname: `${ROUTES.ADMIN_DETAILS}/${user.uid}`,
+                    state: { user },
+                  }}
+                >
+                  Details
+                </Link>
+              </span>
+      </li>
+    ))}
+  </ul>
 );
-
-const condition = authUser =>
-  authUser && !!authUser.roles[ROLES.ADMIN];
-
-export default compose(
-  withEmailVerification,
-  withAuthorization(condition),
-)(AdminPage);
+export default withFirebase(Admin);

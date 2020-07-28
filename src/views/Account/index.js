@@ -7,8 +7,8 @@ import {
   withEmailVerification,
 } from '../../components/Session';
 import { withFirebase } from '../../components/firebase';
-import PasswordForget from '../passwordForget';
 import PasswordChange from '../passwordChange';
+import Profile from "../profile"
 
 const SIGN_IN_METHODS = [
   {
@@ -16,15 +16,15 @@ const SIGN_IN_METHODS = [
     provider: null,
   },
   {
-    id: 'google.com',
+    id: <i class="fab fa-google-plus"></i>,
     provider: 'googleProvider',
   },
   {
-    id: 'facebook.com',
+    id: <i class="fab fa-facebook-f"></i>,
     provider: 'facebookProvider',
   },
   {
-    id: 'twitter.com',
+    id: <i class="fab fa-twitter"></i>,
     provider: 'twitterProvider',
   },
 ];
@@ -33,10 +33,55 @@ const AccountPage = () => (
   <AuthUserContext.Consumer>
     {authUser => (
       <div>
-        <h1>Account: {authUser.email}</h1>
-        <PasswordForget/>
-        <PasswordChange/>
-        <LoginManagement authUser={authUser} />
+        <br />     
+        <div class="container emp-profile">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="profile-img">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt="" />
+                <div class="file btn btn-lg btn-primary">
+                  Change Photo
+                                <input type="file" name="file" />
+                </div>
+              </div>
+              <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fas fa-user-plus"></i> Profile</a>
+                <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false"><i class="fa fa-sliders"></i> Settings</a>
+                <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false"><i class="fas fa-id-card-alt"></i> Contact Info</a>
+              </div>
+            </div>
+            <div class="col-md-6">
+
+              <div class="profile-head">
+                <h5>
+                  Username: {authUser.username}
+                </h5>
+                <h6><a href="/#">
+                  Email: {authUser.email}
+                </a>
+                </h6>
+
+              </div>
+
+              <fieldset class="fieldset">
+                <h3 class="fieldset-title">Personal Info</h3>
+              </fieldset>
+              <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                  <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="true">Profile</a>
+                  <a class="nav-item nav-link" id="nav-settings-tab" data-toggle="tab" href="#nav-settings" role="tab" aria-controls="nav-settings" aria-selected="false">Settings</a>
+                  <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a>
+                </div>
+
+              </nav>
+              <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab"><br /><Profile/></div>
+                <div class="tab-pane fade" id="nav-settings" role="tabpanel" aria-labelledby="nav-settings-tab"><br /><PasswordChange /></div>
+                <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab"><LoginManagement authUser={authUser} /></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     )}
   </AuthUserContext.Consumer>
@@ -115,14 +160,14 @@ class LoginManagementBase extends Component {
                     onUnlink={this.onUnlink}
                   />
                 ) : (
-                  <SocialLoginToggle
-                    onlyOneLeft={onlyOneLeft}
-                    isEnabled={isEnabled}
-                    signInMethod={signInMethod}
-                    onLink={this.onSocialLoginLink}
-                    onUnlink={this.onUnlink}
-                  />
-                )}
+                    <SocialLoginToggle
+                      onlyOneLeft={onlyOneLeft}
+                      isEnabled={isEnabled}
+                      signInMethod={signInMethod}
+                      onLink={this.onSocialLoginLink}
+                      onUnlink={this.onUnlink}
+                    />
+                  )}
               </li>
             );
           })}
@@ -143,19 +188,21 @@ const SocialLoginToggle = ({
   isEnabled ? (
     <button
       type="button"
+      class="btn btn-primary"
       onClick={() => onUnlink(signInMethod.id)}
       disabled={onlyOneLeft}
     >
       Deactivate {signInMethod.id}
     </button>
   ) : (
-    <button
-      type="button"
-      onClick={() => onLink(signInMethod.provider)}
-    >
-      Link {signInMethod.id}
-    </button>
-  );
+      <button
+        type="button"
+        class="btn btn-primary"
+        onClick={() => onLink(signInMethod.provider)}
+      >
+        Link {signInMethod.id}
+      </button>
+    );
 
 class DefaultLoginToggle extends Component {
   constructor(props) {
@@ -191,33 +238,34 @@ class DefaultLoginToggle extends Component {
     return isEnabled ? (
       <button
         type="button"
+        class="btn btn-primary"
         onClick={() => onUnlink(signInMethod.id)}
         disabled={onlyOneLeft}
       >
         Deactivate {signInMethod.id}
       </button>
     ) : (
-      <form onSubmit={this.onSubmit}>
-        <input
-          name="passwordOne"
-          value={passwordOne}
-          onChange={this.onChange}
-          type="password"
-          placeholder="New Password"
-        />
-        <input
-          name="passwordTwo"
-          value={passwordTwo}
-          onChange={this.onChange}
-          type="password"
-          placeholder="Confirm New Password"
-        />
+        <form onSubmit={this.onSubmit}>
+          <input
+            name="passwordOne"
+            value={passwordOne}
+            onChange={this.onChange}
+            type="password"
+            placeholder="New Password"
+          />
+          <input
+            name="passwordTwo"
+            value={passwordTwo}
+            onChange={this.onChange}
+            type="password"
+            placeholder="Confirm New Password"
+          />
 
-        <button disabled={isInvalid} type="submit">
-          Link {signInMethod.id}
-        </button>
-      </form>
-    );
+          <button disabled={isInvalid} class="btn btn-primary" type="submit">
+            Link {signInMethod.id}
+          </button>
+        </form>
+      );
   }
 }
 

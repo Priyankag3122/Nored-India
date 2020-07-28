@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
-
-// import { SignUpLink } from '../SignUp';
-import  PasswordForget  from '../views/passwordForget';
 import { withFirebase } from '../components/firebase/';
 import * as ROUTES from '../utils/routes';
 
@@ -254,8 +251,8 @@ class SignInTwitterBase extends Component {
         return (
             <form >
                 <a href="/#" className="btn btn-block btn-twitter" onClick={this.onSubmit}>
-                    <i className="fab fa-twitter" ></i>
-             Login via Twitter
+                    <i className="fab fa-twitter" ></i> 
+                      Login via Twitter
              </a>
 
                 {error && <p>{error.message}</p>}

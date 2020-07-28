@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from "react-router-dom";
+import { compose } from 'recompose';
 import * as ROUTES from "../utils/routes";
-import PostDetail from "../views/postDetail"
-import { withAuthorization } from '../components/Session';
+import { withAuthorization ,withEmailVerification } from '../components/Session';
 
-class home extends Component {
-    onHandlerSubmit = (event) => {
-        this.props.history.push(ROUTES.POSTDETAIL);
-    }
+class home extends Component {   
     render() {
         return (
             <div>
@@ -28,7 +24,7 @@ class home extends Component {
                                 <div className="card-body">
                                     <h2 className="card-title">Post Title</h2>
                                     <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
-                                    <a href="/#" className="btn btn-primary" onClick={this.onHandlerSubmit.bind(this)}>
+                                    <a href={ROUTES.POSTDETAIL} className="btn btn-primary" >
 
                                         Read More &rarr;</a>
                                 </div>
@@ -142,4 +138,7 @@ class home extends Component {
     }
 }
 const condition = authUser => !!authUser;
-export default withAuthorization(condition)(home);
+export default compose(
+    withEmailVerification,
+    withAuthorization(condition),
+  )(home);

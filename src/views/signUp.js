@@ -6,7 +6,7 @@ import * as ROUTES from '../utils/routes';
 import * as ROLES from '../utils/roles';
 import { SignInGoogle, SignInFacebook, SignInTwitter} from "../views/signIn"
 
-
+ 
 const SignUpPage = () => (
   <div>
 
@@ -43,7 +43,7 @@ class SignUpFormBase extends Component {
   onSubmit = event => {
     const { username, email, passwordOne, isAdmin } = this.state;
     const roles = {};
-
+    
     if (isAdmin) {
       roles[ROLES.ADMIN] = ROLES.ADMIN;
     }
@@ -61,9 +61,9 @@ class SignUpFormBase extends Component {
           { merge: true },
         );
       })
-      // .then(() => {
-      //   return this.props.firebase.doSendEmailVerification();
-      // })
+      .then(() => {
+        return this.props.firebase.doSendEmailVerification();
+      })
       .then(() => {
         this.setState({ ...INITIAL_STATE });
         this.props.history.push(ROUTES.HOME);
